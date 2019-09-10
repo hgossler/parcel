@@ -172,6 +172,13 @@ class Resolver {
       return {filePath: builtins[filename]};
     }
 
+    // use the "real path" of the directory to match default node resolution algorithm
+    try {
+      dir = await fs.realpath(dir);
+    } catch (err) {
+      // ignore
+    }
+
     let parts = getModuleParts(filename);
     let root = path.parse(dir).root;
 
